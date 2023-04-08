@@ -1,10 +1,13 @@
 import requests
 import os 
 
-response_csv = requests.get('https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY?date=20230301&stockNo=2330&response=csv')
+stocks = [2330, 6183]
 
-if not os.path.exists('twse_csv'):
-    os.mkdir('twse_csv')
+for stock in stocks:
+    response_csv = requests.get(f'https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY?date=20230301&stockNo={stock}&response=csv')
 
-with open('twse_csv//2330_202303.csv', 'wb') as f:
-    f.write(response_csv.content)
+    if not os.path.exists('twse_csv'):
+        os.mkdir('twse_csv')
+
+    with open(f'twse_csv//{stock}_202303.csv', 'wb') as f:
+        f.write(response_csv.content)
